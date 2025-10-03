@@ -1,0 +1,28 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+.env
+
+# C++
+*.o
+*.so
+build/
+cmake-build-*/
+
+# Node
+node_modules/
+dist/
+.vite/
+
+# IDE
+.vscode/
+.idea/
+
+# Data
+data/
+*.index
+crawl_data/
+EOF
+
