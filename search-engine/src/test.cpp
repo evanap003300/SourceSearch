@@ -24,14 +24,5 @@ int main() {
         cout << pair.first << ": " << pair.second << "\n";
     }
     
-    cout << "\n=== Test 3: Testing with sample text ===\n";
-    string sampleText = "hello world hello C++ world";
-    unordered_map<string, int> sampleFreq = ff.getFrequencies(sampleText);
-    
-    cout << "Sample text frequencies:\n";
-    for (const auto& pair : sampleFreq) {
-        cout << pair.first << ": " << pair.second << "\n";
-    }
-    
     return 0;
 }
