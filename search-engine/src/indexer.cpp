@@ -12,12 +12,9 @@ int main() {
         return 1;
     }
 
-    string line;
+    string fileContents((istreambuf_iterator<char>(inputFile)), istreambuf_iterator<char>());
+    cout << fileContents << std::endl;
     
-    while (getline(inputFile, line)) {
-        cout << line << endl;
-    }
-
     inputFile.close();
     return 0;
 }
