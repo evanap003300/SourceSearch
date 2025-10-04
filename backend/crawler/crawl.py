@@ -1,6 +1,7 @@
 import requests
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
+from urllib.robotparser import RobotFileParser
 from typing import List, Optional
 
 BASE_URL = "https://github.com/evanap003300/Search_Engine/tree/main/frontend"
@@ -31,6 +32,11 @@ def run():
     urls_to_visit = [BASE_URL]
     visited_urls = set()
     crawl_limit = 20
+    crawled_data = {}
+
+    rp = RobotFileParser()
+    rp.set_url(urljoin(BASE_URL, 'robots.txt'))
+    rp.read()
 
     print("--- Starting Crawler ---")
 
@@ -40,12 +46,24 @@ def run():
         if current_url in visited_urls:
             continue
         
+        if not rp.can_fetch('*', current_url):
+            print(f"Skipping (disallowed by robots.txt): {current_url}")
+            continue
+        
         print(f"Crawling: {current_url}")
         visited_urls.add(current_url)
-        
         html_content = get_html(current_url)
         
         if html_content:
+            soup = BeautifulSoup(html_content, 'html.parser')
+            
+            page_title = soup.title.string if soup.title else "No Title Found"
+            page_text = soup.get_text(separator=' ', strip=True)
+            crawled_data[current_url] = {
+                'title': page_title,
+                'text': page_text
+            }
+            
             links = get_links_from_html(html_content)
             for link in links:
                 absolute_url = urljoin(current_url, link)
