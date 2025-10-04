@@ -11,6 +11,7 @@ python_code/
 *.so
 build/
 cmake-build-*/
+a.out
 
 # Node
 node_modules/

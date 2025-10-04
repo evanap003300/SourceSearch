@@ -5,9 +5,7 @@
 using namespace std;
 
 int main() {
-    cout << "hello world";
-
-    ifstream inputFile("hello.txt");
+    ifstream inputFile("../../backend/crawler/python_code/3b1b_manim___main__.py");
 
     if (!inputFile.is_open()) {
         cerr << "Error opening the file!" << endl;
@@ -17,7 +15,7 @@ int main() {
     string line;
     
     while (getline(inputFile, line)) {
-        cout << "Read line: " << line << std::endl;
+        cout << line << endl;
     }
 
     inputFile.close();
