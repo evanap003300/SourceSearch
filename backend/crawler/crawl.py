@@ -6,7 +6,7 @@ from typing import List, Optional
 import os
 import json
 
-BASE_URL = "https://github.com/evanap003300/Search_Engine/tree/main/frontend"
+BASE_URL = "http://quotes.toscrape.com/"
 
 def get_html(url: str) -> Optional[str]:
     """Fetches the HTML content of a URL."""
