@@ -7,7 +7,7 @@
 using namespace std;
 
 Indexer::Indexer() {
-    cout << "Object created\n";
+    // Object created - removed debug output for JSON compatibility
 }
 
 string Indexer::getFileContent(const string& fileName) {
@@ -60,6 +60,6 @@ void Indexer::buildIndex(const string& directory) {
             docId++;
         }
     }
-    
-    cout << "Index built for " << docId << " documents.\n";
+
+    // Index built - removed debug output for JSON compatibility
 }

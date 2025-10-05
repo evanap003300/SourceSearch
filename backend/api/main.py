@@ -22,6 +22,12 @@ CPP_EXECUTABLE = os.path.join(
     "../../search-engine/build/search_engine"
 )
 
+# Default directory to search
+DEFAULT_SEARCH_DIR = os.path.join(
+    os.path.dirname(__file__),
+    "../crawler/python_code"
+)
+
 @app.get("/")
 async def root():
     """Root endpoint"""
@@ -51,9 +57,13 @@ async def search(q: str = Query(..., description="Search query term")):
         )
 
     try:
-        # Execute the C++ search program with the query as an argument
+        # Execute the C++ search program with the directory and query as arguments
+        # Use absolute paths to avoid any ambiguity
+        abs_search_dir = os.path.abspath(DEFAULT_SEARCH_DIR)
+        abs_executable = os.path.abspath(CPP_EXECUTABLE)
+
         result = subprocess.run(
-            [CPP_EXECUTABLE, q],
+            [abs_executable, abs_search_dir, q],
             capture_output=True,
             text=True,
             timeout=300
