@@ -44,6 +44,7 @@ void Indexer::buildIndex(const string& directory) {
     for (const auto& entry : filesystem::directory_iterator(directory)) {
         if (entry.is_regular_file()) {
             string path = entry.path().string();
+            manifest_[docId] = path;
             
             string content = getFileContent(path);
             if (content.empty()) {

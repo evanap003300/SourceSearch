@@ -5,23 +5,23 @@
 
 int main() {
     Indexer myIndexer;
-    myIndexer.buildIndex("python_code");
+    myIndexer.buildIndex("../../backend/crawler/python_code");
     
     const auto& completed_index = myIndexer.getIndex();
+    const auto& manifest = myIndexer.getManifest();
 
-    Searcher mySearcher(completed_index);
-
+    Searcher mySearcher(completed_index, manifest);
+    
     std::string query = "requests";
-    std::vector<int> doc_ids = mySearcher.search(query);
+    std::vector<std::string> file_paths = mySearcher.search(query);
 
-    if (!doc_ids.empty()) {
-        std::cout << "\nTerm '" << query << "' found in document IDs: ";
-        for (int id : doc_ids) {
-            std::cout << id << " ";
+    if (!file_paths.empty()) {
+        std::cout << "\nTerm '" << query << "' found in the following files:" << std::endl;
+        for (const auto& path : file_paths) {
+            std::cout << "  - " << path << std::endl;
         }
-        std::cout << '\n';
     } else {
-        std::cout << "\nTerm '" << query << "' was not found in the index.\n";
+        std::cout << "\nTerm '" << query << "' was not found in the index." << std::endl;
     }
     
     return 0;
