@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import './App.css'
+import { SearchBar } from './components/SearchBar'
+import { SearchResults } from './components/SearchResults'
 
 interface SearchResult {
   query: string
@@ -40,39 +42,13 @@ function App() {
 
   return (
     <div className="app">
-      <div className="search-container">
-        <h1>Search Engine</h1>
-
-        <form onSubmit={handleSearch} className="search-form">
-          <input
-            type="text"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            placeholder="Enter search query..."
-            className="search-input"
-            disabled={loading}
-          />
-          <button type="submit" className="search-button" disabled={loading}>
-            {loading ? 'Searching...' : 'Search'}
-          </button>
-        </form>
-
-        {error && <div className="error">{error}</div>}
-
-        {searchResults && (
-          <div className="results-container">
-            <h2>Results for "{searchResults.query}" ({searchResults.count} found)</h2>
-            <div className="results-list">
-              {searchResults.results.slice(0, 10).map((result, index) => (
-                <div key={index} className="result-item">
-                  <span className="result-number">{index + 1}.</span>
-                  <span className="result-path">{result}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-      </div>
+      <SearchBar
+        query={query}
+        onQueryChange={setQuery}
+        onSearch={handleSearch}
+        loading={loading}
+      />
+      <SearchResults searchResults={searchResults} error={error} />
     </div>
   )
 }
