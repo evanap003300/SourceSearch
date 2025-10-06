@@ -7,13 +7,23 @@
 class Indexer {
 public:
     Indexer(); 
-    std::string getFileContent(const std::string& fileName); 
-    std::unordered_map<std::string, int> getFrequencies(const std::string& text);
+
+    // Seralization of files
+    void saveIndexToFile(const std::string& filename);
+    void loadIndexFromFile(const std::string& filename);
+
+    // Build the index
     void buildIndex(const std::string& directory);
+
+    // Getters:
     const auto& getIndex() const { return inverted_index; }
     const auto& getManifest() const { return manifest_; }
 
 private:
+    // Helper functions
+    std::string getFileContent(const std::string& fileName); 
+    std::unordered_map<std::string, int> getFrequencies(const std::string& text);
+
     std::unordered_map<std::string, std::unordered_map<int, int>> inverted_index;
     std::unordered_map<int, std::string> manifest_;
 };

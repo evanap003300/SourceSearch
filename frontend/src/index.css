@@ -1,6 +1,6 @@
 @import "tailwindcss";
 
-/* Base Styles */
+/* Base Styles 0f172a */
 body {
   margin: 0;
   padding: 0;
@@ -9,7 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #000000;
+  background: #000000; 
   color: #f3f4f6;
 }
 
