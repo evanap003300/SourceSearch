@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import './SearchBar.css'
 
 interface SearchBarProps {
@@ -14,6 +15,8 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   onSearch,
   loading
 }) => {
+  const navigate = useNavigate()
+
   return (
     <div className="search-bar-container">
       <div className="brand">
@@ -58,16 +61,25 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             </button>
           )}
         </div>
-        <button type="submit" className="search-button" disabled={loading || !query.trim()}>
-          {loading ? (
-            <>
-              <span className="spinner"></span>
-              Searching...
-            </>
-          ) : (
-            'Search'
-          )}
-        </button>
+        <div className="button-group">
+          <button type="submit" className="search-button" disabled={loading || !query.trim()}>
+            {loading ? (
+              <>
+                <span className="spinner"></span>
+                Searching...
+              </>
+            ) : (
+              'Search'
+            )}
+          </button>
+          <button
+            type="button"
+            className="dashboard-button"
+            onClick={() => navigate('/dashboard')}
+          >
+            Dashboard
+          </button>
+        </div>
       </form>
     </div>
   )
