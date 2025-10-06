@@ -113,6 +113,13 @@
   cursor: not-allowed;
 }
 
+.header-buttons {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+
+.header-about-button,
 .header-dashboard-button {
   background-color: #303134;
   color: #e8eaed;
@@ -126,6 +133,7 @@
   white-space: nowrap;
 }
 
+.header-about-button:hover,
 .header-dashboard-button:hover {
   background-color: #3c4043;
   border-color: #8ab4f8;

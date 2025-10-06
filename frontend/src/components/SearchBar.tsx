@@ -42,7 +42,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             type="text"
             value={query}
             onChange={(e) => onQueryChange(e.target.value)}
-            placeholder="Search through your codebase..."
+            placeholder="Search millions of open-source Python files..."
             className="search-input"
             disabled={loading}
             autoFocus

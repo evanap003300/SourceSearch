@@ -18,6 +18,34 @@ export const Home = () => {
 
   return (
     <div className="app" style={{ position: 'relative', minHeight: '100vh', width: '100%' }}>
+      <button
+        onClick={() => navigate('/about')}
+        style={{
+          position: 'absolute',
+          top: '2rem',
+          left: '2rem',
+          zIndex: 10,
+          padding: '0.65rem 1.5rem',
+          fontSize: '0.9rem',
+          fontWeight: '500',
+          backgroundColor: 'rgba(255, 255, 255, 0.1)',
+          border: '1px solid rgba(255, 255, 255, 0.2)',
+          color: 'white',
+          borderRadius: '0.5rem',
+          cursor: 'pointer',
+          transition: 'all 0.2s ease',
+        }}
+        onMouseEnter={(e) => {
+          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.15)'
+          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.3)'
+        }}
+        onMouseLeave={(e) => {
+          e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.1)'
+          e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.2)'
+        }}
+      >
+        About
+      </button>
       <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
         <Beams
           beamWidth={3}

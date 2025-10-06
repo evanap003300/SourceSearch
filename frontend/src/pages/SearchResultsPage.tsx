@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
-import { useSearchParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 import { SearchResults } from '../components/SearchResults'
 import './SearchResultsPage.css'
 
@@ -92,7 +92,7 @@ export const SearchResultsPage = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search through your codebase..."
+                placeholder="Search millions of open-source Python files..."
                 className="header-search-input"
                 disabled={loading}
               />
@@ -118,13 +118,22 @@ export const SearchResultsPage = () => {
             </div>
           </form>
 
-          <button
-            type="button"
-            className="header-dashboard-button"
-            onClick={() => navigate('/dashboard')}
-          >
-            Dashboard
-          </button>
+          <div className="header-buttons">
+            <button
+              type="button"
+              className="header-about-button"
+              onClick={() => navigate('/about')}
+            >
+              About
+            </button>
+            <button
+              type="button"
+              className="header-dashboard-button"
+              onClick={() => navigate('/dashboard')}
+            >
+              Dashboard
+            </button>
+          </div>
         </div>
       </header>
 
