@@ -10,9 +10,10 @@ interface SearchResult {
 interface SearchResultsProps {
   searchResults: SearchResult | null
   error: string | null
+  searchTime?: number
 }
 
-export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, error }) => {
+export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, error, searchTime = 0 }) => {
   if (error) {
     return (
       <div className="results-container">
@@ -71,30 +72,27 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, err
 
   return (
     <div className="results-container">
-      <div className="results-header">
-        <h2 className="results-title">
-          Search Results for "<span className="query-highlight">{searchResults.query}</span>"
-        </h2>
-        <div className="results-count">
-          <span className="count-number">{searchResults.count}</span>
-          <span className="count-label">{searchResults.count === 1 ? 'file' : 'files'} found</span>
-        </div>
+      <div className="results-stats">
+        <p className="results-info">Found {searchResults.count} results ({searchTime.toFixed(2)} seconds)</p>
       </div>
 
       <div className="results-list">
         {searchResults.results.slice(0, 10).map((result, index) => (
           <div key={index} className="result-item">
-            <div className="result-number">{index + 1}</div>
             <div className="result-content">
-              <div className="result-icon">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
-                  <polyline points="13 2 13 9 20 9" />
-                </svg>
+              <div className="result-header">
+                <div className="result-favicon">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z" />
+                    <polyline points="13 2 13 9 20 9" />
+                  </svg>
+                </div>
+                <div className="result-url">{result}</div>
               </div>
-              <div className="result-details">
-                <div className="result-filename">{result}</div>
-              </div>
+              <h3 className="result-title">{result.split('/').pop() || result}</h3>
+              <p className="result-snippet">
+                File path: {result}
+              </p>
             </div>
           </div>
         ))}
