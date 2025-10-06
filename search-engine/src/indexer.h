@@ -15,9 +15,9 @@ public:
     // Build the index
     void buildIndex(const std::string& directory);
 
-    // Getters:
-    const auto& getIndex() const { return inverted_index; }
-    const auto& getManifest() const { return manifest_; }
+    // Getters
+    const std::unordered_map<std::string, std::unordered_map<int, int>>& getIndex() const { return inverted_index; }
+    const std::unordered_map<int, std::string>& getManifest() const { return manifest_; }
 
 private:
     // Helper functions
