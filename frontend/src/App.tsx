@@ -1,9 +1,9 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './App.css'
-import { Home } from './pages/Home'
-import { Dashboard } from './pages/Dashboard'
-import { SearchResultsPage } from './pages/SearchResultsPage'
 import { About } from './pages/About'
+import { Dashboard } from './pages/Dashboard'
+import { Home } from './pages/Home'
+import { SearchResultsPage } from './pages/SearchResultsPage'
 
 function App() {
   return (
