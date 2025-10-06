@@ -11,12 +11,12 @@
 }
 
 .brand-name {
-  font-size: 5.5rem;
-  font-weight: 400;
+  font-size: 4rem;
+  font-weight: 600;
   color: white;
   margin: 0;
-  letter-spacing: -0.5px;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Arial, sans-serif;
+  letter-spacing: -1.5px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
 }
 
 .brand-tagline {
@@ -150,7 +150,7 @@
 
 @media (max-width: 640px) {
   .brand-name {
-    font-size: 3rem;
+    font-size: 2.5rem;
   }
 
   .search-bar-container {
