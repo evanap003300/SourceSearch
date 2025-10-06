@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import './App.css'
+import Beams from './components/Beams'
 import { SearchBar } from './components/SearchBar'
 import { SearchResults } from './components/SearchResults'
 
@@ -41,14 +42,28 @@ function App() {
   }
 
   return (
-    <div className="app">
-      <SearchBar
-        query={query}
-        onQueryChange={setQuery}
-        onSearch={handleSearch}
-        loading={loading}
-      />
-      <SearchResults searchResults={searchResults} error={error} />
+    <div className="app" style={{ position: 'relative', minHeight: '100vh', width: '100%' }}>
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+        <Beams
+          beamWidth={3}
+          beamHeight={30}
+          beamNumber={20}
+          lightColor="#ffffff"
+          speed={2}
+          noiseIntensity={1.75}
+          scale={0.2}
+          rotation={30}
+        />
+      </div>
+      <div className="content" style={{ position: 'relative', zIndex: 1, padding: '2rem', display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+        <SearchBar
+          query={query}
+          onQueryChange={setQuery}
+          onSearch={handleSearch}
+          loading={loading}
+        />
+        <SearchResults searchResults={searchResults} error={error} />
+      </div>
     </div>
   )
 }
