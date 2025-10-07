@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import Beams from '../components/Beams'
 import { SearchBar } from '../components/SearchBar'
+import { Footer } from '../components/Footer'
 
 export const Home = () => {
   const [query, setQuery] = useState('')
@@ -64,6 +65,7 @@ export const Home = () => {
           loading={loading}
         />
       </div>
+      <Footer />
     </div>
   )
 }
