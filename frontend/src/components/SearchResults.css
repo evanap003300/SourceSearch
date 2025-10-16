@@ -238,13 +238,25 @@
 }
 
 .result-item {
-  padding: 0.5rem 0;
+  padding: 1rem;
   cursor: pointer;
   transition: all 0.2s ease;
+  border-radius: 8px;
+  margin: -0.5rem 0;
+}
+
+.result-item:hover {
+  background: rgba(139, 180, 248, 0.08);
+  transform: translateX(4px);
 }
 
 .result-item:hover .result-title {
   text-decoration: underline;
+  color: #a8d5ff;
+}
+
+.result-item:hover .result-favicon {
+  color: #8ab4f8;
 }
 
 .result-content {

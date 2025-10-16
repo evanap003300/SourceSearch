@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useNavigate, useSearchParams } from 'react-router-dom'
 import { SearchResults } from '../components/SearchResults'
+import CodeViewer from '../components/CodeViewer'
 import './SearchResultsPage.css'
 
 interface SearchResult {
@@ -20,6 +21,13 @@ export const SearchResultsPage = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [searchTime, setSearchTime] = useState<number>(0)
+
+  // CodeViewer state
+  const [isCodeViewerOpen, setIsCodeViewerOpen] = useState(false)
+  const [selectedFilename, setSelectedFilename] = useState<string>('')
+  const [codeContent, setCodeContent] = useState<string>('')
+  const [isLoadingCode, setIsLoadingCode] = useState(false)
+  const [codeError, setCodeError] = useState<string | null>(null)
 
   useEffect(() => {
     if (query) {
@@ -64,6 +72,41 @@ export const SearchResultsPage = () => {
 
   const handleLogoClick = () => {
     navigate('/')
+  }
+
+  const handleResultClick = async (filename: string) => {
+    console.log('SearchResultsPage: handleResultClick called with filename:', filename)
+    setSelectedFilename(filename)
+    setIsCodeViewerOpen(true)
+    setIsLoadingCode(true)
+    setCodeError(null)
+    setCodeContent('')
+
+    try {
+      const url = `http://localhost:8000/api/v1/code?filename=${encodeURIComponent(filename)}`
+      console.log('Fetching from URL:', url)
+      const response = await fetch(url)
+
+      if (!response.ok) {
+        throw new Error(`Failed to fetch file content: ${response.status} ${response.statusText}`)
+      }
+
+      const data = await response.json()
+      console.log('Received code data:', data)
+      setCodeContent(data.content)
+    } catch (err) {
+      const errorMsg = err instanceof Error ? err.message : 'Failed to load code'
+      console.error('Error fetching code:', errorMsg, err)
+      setCodeError(errorMsg)
+    } finally {
+      setIsLoadingCode(false)
+    }
+  }
+
+  const handleCloseCodeViewer = () => {
+    setIsCodeViewerOpen(false)
+    setCodeContent('')
+    setCodeError(null)
   }
 
   return (
@@ -127,10 +170,25 @@ export const SearchResultsPage = () => {
               <p>Searching...</p>
             </div>
           ) : (
-            <SearchResults searchResults={searchResults} error={error} searchTime={searchTime} />
+            <SearchResults
+              searchResults={searchResults}
+              error={error}
+              searchTime={searchTime}
+              onResultClick={handleResultClick}
+            />
           )}
         </div>
       </main>
+
+      {/* Code Viewer Modal */}
+      <CodeViewer
+        isOpen={isCodeViewerOpen}
+        onClose={handleCloseCodeViewer}
+        filename={selectedFilename}
+        content={codeContent}
+        isLoading={isLoadingCode}
+        error={codeError}
+      />
     </div>
   )
 }

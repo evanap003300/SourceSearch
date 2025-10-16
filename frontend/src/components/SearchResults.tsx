@@ -11,9 +11,18 @@ interface SearchResultsProps {
   searchResults: SearchResult | null
   error: string | null
   searchTime?: number
+  onResultClick?: (filename: string) => void
 }
 
-export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, error, searchTime = 0 }) => {
+export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, error, searchTime = 0, onResultClick }) => {
+  const handleResultClick = (result: string) => {
+    console.log('Result clicked:', result);
+    if (onResultClick) {
+      console.log('Calling onResultClick with filename:', result);
+      onResultClick(result);
+    }
+  };
+
   if (error) {
     return (
       <div className="results-container">
@@ -81,7 +90,7 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, err
 
       <div className="results-list">
         {searchResults.results.slice(0, 10).map((result, index) => (
-          <div key={index} className="result-item">
+          <div key={index} className="result-item" onClick={() => handleResultClick(result)} style={{ cursor: 'pointer' }}>
             <div className="result-content">
               <div className="result-header">
                 <div className="result-favicon">
