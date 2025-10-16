@@ -6,6 +6,7 @@ import json
 import os
 import socket
 import time
+from github import Github
 
 app = FastAPI(title="Search Engine API")
 
@@ -44,6 +45,14 @@ MANIFEST_FILE = os.path.join(INDEX_DIR, "manifest.bin")
 CPP_SERVER_HOST = "127.0.0.1"
 CPP_SERVER_PORT = 9000
 CPP_SERVER_TIMEOUT = 5  # seconds
+
+# GitHub API client
+GITHUB_TOKEN = os.getenv("GITHUB_TOKEN")
+try:
+    g = Github(GITHUB_TOKEN) if GITHUB_TOKEN else Github()
+except Exception as e:
+    print(f"Warning: Could not initialize GitHub client: {e}")
+    g = None
 
 def query_cpp_server(query: str) -> dict:
     """
@@ -263,3 +272,55 @@ async def health_check():
         "ready_for_search": all_ready,
         "notes": "To start the server, run: ./search-engine/build/search_engine --server" if not server_running else ""
     }
+
+@app.get("/api/v1/code", response_model=dict)
+async def get_code(filename: str = Query(..., description="Local filename in python_code directory")):
+    """
+    Fetch the content of a code file from the local python_code directory.
+
+    Args:
+        filename: The filename stored in the python_code directory
+                 (format: owner_repo_original_filename.py)
+
+    Returns:
+        Dictionary with file content and metadata
+    """
+    try:
+        # Construct the full path to the file
+        file_path = os.path.join(DEFAULT_SOURCE_DIR, filename)
+
+        # Security: Prevent directory traversal attacks
+        real_path = os.path.realpath(file_path)
+        real_source_dir = os.path.realpath(DEFAULT_SOURCE_DIR)
+
+        if not real_path.startswith(real_source_dir):
+            raise HTTPException(
+                status_code=403,
+                detail="Access denied: Invalid file path"
+            )
+
+        # Check if file exists
+        if not os.path.exists(real_path):
+            raise HTTPException(
+                status_code=404,
+                detail=f"File not found: {filename}"
+            )
+
+        # Read the file
+        with open(real_path, 'r', encoding='utf-8') as f:
+            file_content = f.read()
+
+        return {
+            "success": True,
+            "content": file_content,
+            "filename": filename,
+            "language": filename.split('.')[-1] if '.' in filename else "text"
+        }
+    except HTTPException:
+        raise
+    except Exception as e:
+        error_message = str(e)
+        raise HTTPException(
+            status_code=500,
+            detail=f"Failed to fetch file: {error_message}"
+        )
