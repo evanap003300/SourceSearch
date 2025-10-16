@@ -45,26 +45,29 @@ export const SearchResults: React.FC<SearchResultsProps> = ({ searchResults, err
   if (searchResults.count === 0) {
     return (
       <div className="results-container">
-        <div className="empty-state">
-          <svg
-            className="empty-icon"
-            width="64"
-            height="64"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <circle cx="11" cy="11" r="8" />
-            <path d="m21 21-4.35-4.35" />
-            <line x1="11" y1="8" x2="11" y2="14" />
-            <line x1="8" y1="11" x2="14" y2="11" />
-          </svg>
-          <h3 className="empty-title">No Results Found</h3>
-          <p className="empty-message">
-            No files found containing "<span className="query-highlight">{searchResults.query}</span>"
-          </p>
-          <p className="empty-suggestion">Try a different search term or check your indexed directory.</p>
+        <div className="empty-state-modal">
+          <div className="empty-state-backdrop"></div>
+          <div className="empty-state-content">
+            <h2 className="empty-title">No Results Found</h2>
+
+            <p className="empty-message">
+              We couldn't find any files matching "<span className="query-highlight">{searchResults.query}</span>"
+            </p>
+
+            <div className="empty-tips">
+              <p className="empty-tips-label">Try these alternatives:</p>
+              <ul className="empty-tips-list">
+                <li>Check the spelling of your search term</li>
+                <li>Use fewer or more general keywords</li>
+                <li>Try searching for related terms</li>
+                <li>Verify your indexed directory contains files</li>
+              </ul>
+            </div>
+
+            <button className="empty-action-button" onClick={() => window.location.href = '/'}>
+              Start a New Search
+            </button>
+          </div>
         </div>
       </div>
     )
