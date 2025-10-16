@@ -9,7 +9,11 @@ add_executable(search_engine
     src/main.cpp
     src/indexer.cpp
     src/searcher.cpp
+    src/server.cpp
 )
 
 # Include directories
 target_include_directories(search_engine PRIVATE src)
+
+# Link threading library
+target_link_libraries(search_engine PRIVATE pthread)

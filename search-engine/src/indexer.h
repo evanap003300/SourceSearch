@@ -8,9 +8,11 @@ class Indexer {
 public:
     Indexer(); 
 
-    // Seralization of files
+    // Serialization of files
     void saveIndexToFile(const std::string& filename);
     void loadIndexFromFile(const std::string& filename);
+    void saveManifestToFile(const std::string& filename);
+    void loadManifestFromFile(const std::string& filename);
 
     // Build the index
     void buildIndex(const std::string& directory);
